@@ -1,0 +1,39 @@
+{% extends "./baza.html" %}
+
+{% comment %}
+{% block content %}
+<h1>titlu foarte important</h1>
+<p>:3</p>
+<p>param? {{param}}!</p>
+{% endblock %}
+{% endcomment %}
+
+{% load static %}
+
+{% block title %}Pagină principală{% endblock %}
+
+{% block content %}
+<h1>˖ .★˚⊹ ݁ ˖ LIBRĂRIE ONLINE  ˖⋆˚★ ₊ ⊹</h1>
+
+<div id="misiune" class="sectiune">
+    <h2>Introducere</h2>
+    <p>Bun venit!</p>
+    <p>Proiectul meu constă într-un site dedicat unei librării online. Platforma permite utilizatorilor să navigheze printre produse (ediții a unor cărți) și să le filtreze în funcție de diferite criterii (precum autor, editură, preț). Fiecare ediție are propria sa pagină, unde apar mai multe detalii despre aceasta (precum descriere, ISBN, disponibilitate). Administratorii pot adauga produse noi prin intermediul unui formular.
+</p>
+    {# <img src="{% static 'bookapp/imagini/library.jpg' %}" alt="Bibliotecă"> #}
+</div>
+
+<div id="genuri" class="sectiune">
+    <h2>Descoperă</h2>
+    <p>Alege un gen literar și explorează colecția.</p>
+    {% for gen in categorii_toate %}
+        <a href="{% url 'categorie' gen.nume %}" style="color: {{ gen.culoare }}; text-decoration: none; margin-right: 12px;">★ {{ gen.nume }}</a>
+    {% endfor %}
+</div>
+
+<div id="featured" class="sectiune">
+    <h2>Preferata librarului</h2>
+    <p><a href="{% url 'produs_detaliu' '9781250313218' %}">Harrow the Ninth</a> de Tamsyn Muir :3</p>
+    <!-- <p>{{param}}</p> -->
+</div>
+{% endblock %}

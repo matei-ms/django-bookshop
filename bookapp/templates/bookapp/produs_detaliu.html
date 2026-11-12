@@ -1,0 +1,62 @@
+{% extends "bookapp/baza.html" %}
+
+{% block title %}{{ editie.carte.titlu }} - Bookshop{% endblock %}
+
+{% block content %}
+<h1>{{ editie.carte.titlu }}</h1>
+
+<div class="product-detail">
+    <!-- Left side - Cover image -->
+    <div class="product-detail-image">
+        {% if editie.coperta.imagine %}
+            <img src="{{ editie.coperta.imagine.url }}" alt="{{ editie.coperta.alt_text }}">
+        {% endif %}
+    </div>
+    
+    <div class="product-detail-info">
+        {% if editie.carte.carte_autori.all %}
+            <p><strong>Autor{% if editie.carte.carte_autori.count > 1 %}i{% endif %}:</strong> 
+                {% for carte_autor in editie.carte.carte_autori.all %}
+                    {{ carte_autor.autor.nume }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+        {% endif %}
+
+        <p><strong>Descriere:</strong> {{ editie.carte.descriere }}</p>
+        <p><strong>An publicație:</strong> {{ editie.carte.an_publicatie }}</p>
+        <p><strong>Număr pagini:</strong> {{ editie.carte.nr_pagini }}</p>
+
+        <h2>Detalii ediție</h2>
+        <p><strong>ISBN:</strong> {{ editie.isbn }}</p>
+        <p><strong>Preț:</strong> {{ editie.pret }} RON</p>
+        <p><strong>Disponibilitate:</strong> {% if editie.disponibilitate %}În stoc{% else %}Indisponibil{% endif %}</p>
+        <p><strong>Editura:</strong> {{ editie.editura.nume }}</p>
+
+        {% if editie.tip %}
+            <p><strong>Tip:</strong> {{ editie.tip.get_tipul_cartii_display }}</p>
+        {% endif %}
+
+        {% if editie.editie_limbi.all %}
+            <p><strong>Limb{% if editie.editie_limbi.count > 1 %}i{% else %}a{% endif %}:</strong> 
+                {% for editie_limba in editie.editie_limbi.all %}
+                    {{ editie_limba.limba.limba }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+        {% endif %}
+
+        <p><strong>Data adăugării:</strong> {{ editie.data_adaugarii|date:"d.m.Y H:i" }}</p>
+
+        {% if editie.carte.carte_genuri.all %}
+            <p><strong>Gen{% if editie.carte.carte_genuri.count > 1 %}uri{% endif %}:</strong> 
+                {% for carte_gen in editie.carte.carte_genuri.all %}
+                    <a href="{% url 'categorie' carte_gen.gen.nume %}" style="color: {{ carte_gen.gen.culoare }}; text-decoration: none;">
+                        ★ {{ carte_gen.gen.nume }}
+                    </a>
+                {% endfor %}
+            </p>
+        {% endif %}
+    </div>
+</div>
+
+<p><a href="{% url 'produse' %}">← Înapoi la produse</a></p>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "bookapp/baza.html" %} <!-- LAB 1 -->
+
+{% block title %}Informații despre server{% endblock %}
+
+{% block content %}
+<h1>Informații despre server</h1>
+<div id="data-ora" class="sectiune">
+    <h2>Data și ora</h2>
+    <p>{{ data }}</p>
+</div>
+
+<div id="parametri" class="sectiune">
+    <h2>Parametri</h2>
+    <p>{{ nr_parametri }} parametri </p>
+    {{ lista_parametri|safe }}
+</div>
+{% endblock %}

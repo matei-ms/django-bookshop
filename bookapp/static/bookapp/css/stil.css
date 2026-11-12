@@ -1,0 +1,343 @@
+:root {
+    --bg: lavender;
+    --bg-soft: lavenderblush;
+    --text: indigo;
+    --text-muted: mediumpurple;
+    --primary: orchid;
+    --primary-dark: darkorchid;
+    --border: plum;
+    --radius: 14px;
+    --radius-sm: 8px;
+    --shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Fredoka', 'Quicksand', Arial, sans-serif;
+    color: var(--text);
+    background-color: var(--bg);
+}
+
+h1, h2, h3 {
+    font-family: 'Fredoka', 'Quicksand', Arial, sans-serif;
+    font-weight: 600;
+}
+
+header {
+    background-color: var(--primary);
+    padding: 0;
+}
+
+::selection {
+    background-color: var(--primary);
+    color: white;
+}
+
+.navbar {
+    background-color: var(--primary);
+}
+
+.menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.menu > li {
+    position: relative;
+}
+
+.menu > li > a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 16px 20px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.menu > li > a:hover {
+    background-color: var(--primary-dark);
+}
+
+.dropdown {
+    position: relative;
+}
+
+.submenu {
+    display: none;
+    position: absolute;
+    background-color: var(--primary-dark);
+    min-width: 200px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    z-index: 1000;
+    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.dropdown:hover .submenu,
+.dropdown.open .submenu {
+    display: block;
+}
+
+.submenu li a {
+    display: block;
+    padding: 10px 20px;
+    color: white;
+    text-decoration: none;
+}
+
+.submenu li a:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+main {
+    padding: 24px;
+    min-height: 400px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+footer {
+    background-color: var(--primary);
+    color: white;
+    text-align: center;
+    padding: 18px;
+    margin-top: 30px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    margin: 20px 0;
+    border-radius: var(--radius-sm);
+}
+
+.sectiune {
+    margin: 24px 0;
+    padding: 24px;
+    background-color: var(--bg-soft);
+    border-radius: var(--radius);
+}
+
+a {
+    color: var(--primary-dark);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: var(--primary);
+    text-decoration: underline;
+}
+
+a:visited {
+    color: var(--primary-dark);
+}
+
+.pagination {
+    margin-top: 30px;
+}
+
+.pagination a {
+    padding: 8px 18px;
+    background-color: var(--bg-soft);
+    border-radius: 999px;
+    color: var(--primary-dark);
+    font-weight: 500;
+}
+
+.pagination a:hover {
+    background-color: var(--primary);
+    color: white;
+    text-decoration: none;
+}
+
+.products-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.product-item {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.product-item:last-child {
+    border-bottom: none;
+}
+
+.product-detail {
+    display: flex;
+    gap: 30px;
+    margin: 20px 0;
+}
+
+.product-detail-image {
+    flex: 0 0 400px;
+}
+
+.product-detail-image img {
+    max-width: 100%;
+    height: 550px;
+    object-fit: cover;
+    border-radius: var(--radius);
+}
+
+.product-detail-info {
+    flex: 1;
+}
+
+@media (max-width: 768px) {
+    .product-detail {
+        flex-direction: column;
+    }
+
+    .product-detail-image {
+        flex: 0 0 auto;
+        max-width: 100%;
+    }
+}
+
+.filtru-produse-form {
+    width: 100%;
+    max-width: 98%;
+    min-width: 320px;
+    margin-bottom: 30px;
+    background: var(--bg-soft);
+    padding: 20px;
+    border-radius: var(--radius);
+    display: block;
+    position: relative;
+}
+
+.filtru-produse-grid {
+    display: flex;
+    gap: 40px;
+}
+
+.filtru-produse-grid > div {
+    width: 50%;
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.filtru-produse-form label {
+    font-weight: 600;
+    font-size: 0.9em;
+    margin-bottom: 2px;
+}
+
+.filtru-produse-form input,
+.filtru-produse-form select {
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 0.9em;
+    font-family: 'Poppins', Arial, sans-serif;
+    background: #fff;
+    margin-bottom: 4px;
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+}
+
+.filtru-produse-form input:focus,
+.filtru-produse-form select:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.filtru-btn-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+    width: 100%;
+    gap: 10px;
+}
+
+.filtru-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 999px;
+    font-size: 0.9em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.filtru-btn:hover {
+    background: var(--primary-dark);
+}
+
+.filtru-reset-btn {
+    background: var(--bg-soft);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 10px 22px;
+    border-radius: 999px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.filtru-reset-btn:hover {
+    background: var(--border);
+}
+
+@media (max-width: 700px) {
+    .filtru-produse-grid {
+        flex-direction: column;
+        gap: 0;
+    }
+    .filtru-produse-form input,
+    .filtru-produse-form select {
+        width: 100%;
+    }
+    .filtru-btn-container {
+        flex-direction: column;
+    }
+}
+
+.errorlist {
+    background: #fde2e2;
+    color: #9b2c2c;
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 10px;
+    list-style: none;
+}
+
+.errorlist li {
+    margin-bottom: 5px;
+}
+
+form button[type="submit"] {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 999px;
+    font-size: 0.95em;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: 'Poppins', Arial, sans-serif;
+    transition: background 0.2s;
+}
+
+form button[type="submit"]:hover {
+    background: var(--primary-dark);
+}

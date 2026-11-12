@@ -1,0 +1,15 @@
+{% extends "bookapp/baza.html" %} <!-- LAB 2 -->
+
+{% block title %}Log - Bookshop{% endblock %}
+
+{% block content %}
+<h1>Accesări</h1>
+{{ sectiune_nr|safe }}
+{{ sectiune_detalii|safe }}
+{{ lista_html|safe }}
+{{ tabel_html|safe }}
+{{ statistici|safe }}
+{% if eroare %}
+    <p style="color: red;">{{ eroare }}</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,130 @@
+{% extends "bookapp/baza.html" %}
+
+{% block title %}Produse - Bookshop{% endblock %}
+
+{% block content %}
+{% if gen %}
+    <h1>Categorie: {{ gen.nume }}</h1>
+    <p style="color: {{ gen.culoare }};">★ {{ gen.descriere }}</p>
+{% else %}
+    <h1>Toate Produsele</h1>
+{% endif %}
+
+<div class="sorting">
+    <strong>Sortate după preț:</strong>
+    <a href="?sort=a"> ▲ </a> - 
+    <a href="?sort=d"> ▼ </a> - 
+    <a href="?"> nu! </a>
+</div> <br>
+
+{% if eroare %}
+    <p style="color: red;">{{ eroare }}</p>
+{% endif %}
+
+<form method="post" class="filtru-produse-form">
+    {% csrf_token %}
+
+    {% if form.errors %}
+    <ul class="errorlist">
+        {% for field in form %}
+        {% for error in field.errors %}
+            <li>{{ field.label }}: {{ error }}</li>
+        {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if pagination_changed %}
+        <p style="color: darksalmon; font-weight: bold;">
+            Ați schimbat numărul de produse pe pagină. Este posibil să fi sărit peste unele produse sau să le vedeți din nou pe cele deja vizualizate.
+        </p>
+    {% endif %}
+
+    <div class="filtru-produse-grid">
+        <div>
+            {{ form.titlu.label_tag }} {{ form.titlu }} 
+            {{ form.isbn.label_tag }} {{ form.isbn }}
+            {% if gen %}
+                {{ form.gen.label_tag }}
+                <input type="text" name="gen_readonly" value="{{ gen.nume }}" readonly style="background:#eee; color:#888; border:1px solid #ccc;">
+                <input type="hidden" name="gen" value="{{ gen.id }}">
+            {% else %}
+                {{ form.gen.label_tag }} {{ form.gen }}
+            {% endif %}
+            {{ form.pret_min.label_tag }} {{ form.pret_min }}
+            {{ form.pret_max.label_tag }} {{ form.pret_max }}
+            {{ form.items_pe_pagina.label_tag }} {{ form.items_pe_pagina }}
+        </div>
+        <div>
+            {{ form.autor.label_tag }} {{ form.autor }}
+            {{ form.editura.label_tag }} {{ form.editura }}
+            {{ form.tip.label_tag }} {{ form.tip }}
+            {{ form.disponibilitate.label_tag }} {{ form.disponibilitate }}
+            {{ form.data_adaugare_dupa.label_tag }} {{ form.data_adaugare_dupa }}
+        </div>
+    </div>
+
+    <div class="filtru-btn-container">
+        <button type="submit" class="filtru-btn">Filtrează</button>
+        <button type="button" class="filtru-reset-btn" onclick="confirmReset()">Resetează</button>
+    </div>
+</form>
+
+{% if pagina %}
+    {% if pagina.object_list %}
+    <div class="products-list">
+        {% for editie in pagina.object_list %}
+        <div class="product-item">
+            <h3><a href="{% url 'produs_detaliu' editie.isbn %}">{{ editie.carte.titlu }}</a></h3>
+            {% if editie.carte.carte_autori.all %}
+                <p><strong>Autor{% if editie.carte.carte_autori.count > 1 %}i{% endif %}:</strong> 
+                    {% for carte_autor in editie.carte.carte_autori.all %}
+                        {{ carte_autor.autor.nume }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+            {% endif %}
+            <p><strong>Preț:</strong> {{ editie.pret }} RON</p>
+            
+            {% if editie.carte.carte_genuri.all %}
+                <p><strong>Gen{% if editie.carte.carte_genuri.count > 1 %}uri{% endif %}:</strong> 
+                    {% for carte_gen in editie.carte.carte_genuri.all %}
+                        <a href="{% url 'categorie' carte_gen.gen.nume %}" style="color: {{ carte_gen.gen.culoare }}; text-decoration: none;">
+                            ★ {{ carte_gen.gen.nume }}
+                        </a>
+                    {% endfor %}
+                </p>
+                {% endif %}
+        </div>
+        <hr>
+        {% endfor %}
+    </div>
+
+    <span> <br>
+        Pagina {{ pagina.number }} din {{ pagina.paginator.num_pages }}.
+    </span>
+    
+    <div class="pagination">
+    {% if pagina.has_previous %}
+        <a href="?pagina={{ pagina.previous_page_number }}{% if sort_actual %}&sort={{ sort_actual }}{% endif %}"> ← </a>
+    {% endif %}
+    
+    {% if pagina.has_next %}
+        <a href="?pagina={{ pagina.next_page_number }}{% if sort_actual %}&sort={{ sort_actual }}{% endif %}"> → </a>
+    {% endif %}
+    </div>
+    {% else %}
+    <p>Nu există produse care să corespundă filtrelor selectate.</p>
+    {% endif %}
+{% endif %}
+
+<script>
+function confirmReset() {
+    if (confirm("atenție! veți pierde toate filtrele. resetați?")) {
+        window.location.href = window.location.pathname;
+    }
+}
+</script>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "admin/base.html" %}
+{% block extrahead %}
+{{ block.super }}
+<style>
+    :root {
+        --primary: orchid;
+        --secondary: darkorchid;
+        --primary-fg: #ffffff;
+
+        --body-bg: lavender;
+        --darkened-bg: lavender;
+        --selected-row: lavenderblush;
+
+        --body-fg: indigo;
+        --body-quiet-color: mediumpurple;
+        --body-loud-color: indigo;
+
+        --link-fg: darkorchid;
+        --link-hover-color: orchid;
+
+        --header-bg: orchid;
+        --header-color: #ffffff;
+        --header-link-color: #ffffff;
+
+        --breadcrumbs-bg: darkorchid;
+        --breadcrumbs-fg: lavenderblush;
+        --breadcrumbs-link-fg: #ffffff;
+    }
+    input[type="checkbox"] {
+        accent-color: darkorchid;
+    }
+</style>
+{% endblock %}

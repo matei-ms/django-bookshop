@@ -1,0 +1,23 @@
+{% extends "bookapp/baza.html" %}
+
+{% block title %}{% if titlu %}{{ titlu }}{% else %}Eroare 403{% endif %} - Bookshop{% endblock %}
+
+{% block content %}
+<h1>{% if titlu %}{{ titlu }}{% else %}Eroare 403{% endif %}</h1>
+
+{% if user.is_authenticated %}
+    <p>Salut {{ user.username }}</p>
+{% else %}
+    <p>Salut preastimate anonim</p>
+{% endif %}
+
+{% if mesaj_personalizat %}
+    <p>{{ mesaj_personalizat }}</p>
+{% endif %}
+
+<p>Ai ajuns pe o pagină de eroare 403 de {{ nr_accesari_403 }} ori în această sesiune.</p>
+
+{% if nr_accesari_403 > n_max_403 %}
+    <p style="color: red;">Atenție! Ai depășit numărul maxim de accesări permise ({{ n_max_403 }}) ale unei pagini interzise în această sesiune.</p>
+{% endif %}
+{% endblock %}
